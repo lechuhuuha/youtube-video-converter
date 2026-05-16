@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mp4mp3-converter"
+version = "1.0.0"
+description = "Download YouTube videos as MP3/MP4, or convert local MP4 files to MP3"
+requires-python = ">=3.10"
+license = "MIT"
+
+dependencies = [
+    "imageio-ffmpeg",
+    "moviepy",
+    "yt-dlp[default,curl-cffi]",
+    "yt-dlp-ejs",
+]
+
+[project.scripts]
+mp4mp3 = "app.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
