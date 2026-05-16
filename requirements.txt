@@ -1,0 +1,4 @@
+imageio-ffmpeg
+moviepy
+yt-dlp[default,curl-cffi]
+yt-dlp-ejs
