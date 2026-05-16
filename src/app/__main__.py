@@ -1,5 +1,5 @@
 from .app import main
-from .errors import write_error_log
+from .utils.logging import write_error_log
 
 
 if __name__ == "__main__":

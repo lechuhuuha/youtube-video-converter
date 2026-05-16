@@ -1,8 +1,5 @@
 import re
 import sys
-import traceback
-
-from .paths import ERROR_LOG_PATH
 
 
 DOWNLOAD_BLOCKED_HELP = (
@@ -15,14 +12,12 @@ DOWNLOAD_BLOCKED_HELP = (
     "https://github.com/yt-dlp/yt-dlp/wiki/PO-Token-Guide"
 )
 
-
 COOKIE_FILE_HELP = (
     "The video may require your browser session. Export browser cookies to "
     "cookies.txt and place that file beside main.py, then run again.\n\n"
     "Do not disable Chrome security settings for this. cookies.txt is sensitive, "
     "so keep it private and delete it when you no longer need it."
 )
-
 
 COOKIE_RETRY_ERROR_TERMS = (
     "this video is not available",
@@ -48,12 +43,11 @@ def build_python_too_old_help():
         "supports Python 3.9.\n\n"
         f"Current Python: {get_python_version_text()}\n"
         f"Current executable: {sys.executable}\n\n"
-        "Create or activate your Python 3.14 venv and reinstall dependencies:\n\n"
-        "deactivate\n"
-        "py -3.14 -m venv .venv314\n"
-        ".venv314\\Scripts\\activate\n"
+        "Create or activate your Python 3.10+ venv and reinstall dependencies:\n\n"
+        "python3 -m venv .venv\n"
+        "source .venv/bin/activate\n"
         "python --version\n"
-        "python -m pip install -U -r requirements.txt\n"
+        "pip install -e .\n"
         "python main.py"
     )
 
@@ -66,20 +60,6 @@ def describe_error(error):
         return f"{error_type}: {error_message}"
 
     return f"{error_type}: No error message was provided by the library."
-
-
-def write_error_log(error, context=None, append=False):
-    details = "".join(traceback.format_exception(type(error), error, error.__traceback__))
-    if context:
-        details = f"{context}\n{details}"
-
-    if append:
-        with ERROR_LOG_PATH.open("a", encoding="utf-8") as log_file:
-            log_file.write(f"\n\n{details}")
-    else:
-        ERROR_LOG_PATH.write_text(details, encoding="utf-8")
-
-    print(details, file=sys.stderr)
 
 
 def build_download_error(error, tried_cookie_file=False):
